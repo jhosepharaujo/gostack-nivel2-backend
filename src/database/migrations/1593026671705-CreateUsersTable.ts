@@ -1,16 +1,11 @@
-import {
-    MigrationInterface,
-    QueryRunner,
-    Table,
-    TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateAppointmentsTable1593034988797
+export default class CreateUsersTable1593026671705
     implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'appointments',
+                name: 'users',
                 columns: [
                     {
                         name: 'id',
@@ -20,13 +15,17 @@ export default class CreateAppointmentsTable1593034988797
                         default: 'uuid_generate_v4()',
                     },
                     {
-                        name: 'provider_id',
-                        type: 'uuid',
-                        isNullable: true,
+                        name: 'name',
+                        type: 'varchar',
                     },
                     {
-                        name: 'date',
-                        type: 'timestamp with time zone',
+                        name: 'email',
+                        type: 'varchar',
+                        isUnique: true,
+                    },
+                    {
+                        name: 'password',
+                        type: 'varchar',
                     },
                     {
                         name: 'created_at',
@@ -41,19 +40,9 @@ export default class CreateAppointmentsTable1593034988797
                 ],
             }),
         );
-        await queryRunner.createForeignKey(
-            'appointments',
-            new TableForeignKey({
-                columnNames: ['provider_id'],
-                referencedColumnNames: ['id'],
-                referencedTableName: 'users',
-                onDelete: 'SET NULL',
-                onUpdate: 'CASCADE',
-            }),
-        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('appointments');
+        await queryRunner.dropTable('users');
     }
 }
