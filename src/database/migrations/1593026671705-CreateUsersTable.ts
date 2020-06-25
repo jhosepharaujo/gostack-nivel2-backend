@@ -28,6 +28,11 @@ export default class CreateUsersTable1593026671705
                         type: 'varchar',
                     },
                     {
+                        name: 'avatar',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
                         name: 'created_at',
                         type: 'timestamp',
                         default: 'now()',
