@@ -10,7 +10,7 @@ interface IRequest {
     password: string;
 }
 
-injectable();
+@injectable()
 class ResetPasswordService {
     constructor(
         @inject('UsersRepository')
