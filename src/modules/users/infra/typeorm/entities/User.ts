@@ -5,6 +5,7 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
@@ -18,6 +19,7 @@ class User {
     email: string;
 
     @Column()
+    @Exclude()
     password: string;
 
     @Column()
@@ -28,6 +30,13 @@ class User {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @Expose({ name: 'avatar_url' })
+    getAvatarUrl(): string {
+        return this.avatar
+            ? `${process.env.APP_API_URL}/files/${this.avatar}`
+            : 'https://img1.gratispng.com/20180319/epw/kisspng-india-login-computer-icons-emoticon-medicine-user-login-icon-5ab05c8bc2f8d1.4479395815215074677986.jpg';
+    }
 }
 
 export default User;
